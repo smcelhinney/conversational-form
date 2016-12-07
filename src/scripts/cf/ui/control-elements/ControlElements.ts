@@ -496,8 +496,9 @@ namespace cf {
 			}
 
 			new Promise((resolve: any, reject: any) => this.resize(resolve, reject)).then(() => {
-				const h: number = this.el.classList.contains("one-row") ? 52 : this.el.classList.contains("two-row") ? 102 : 0;
-
+				// const h: number = this.el.classList.contains("one-row") ? 52 : this.el.classList.contains("two-row") ? 102 : 0;
+				const listHeight: number = this.el.offsetHeight;
+				const h: number = this.el.classList.contains("one-row") ? 52 : this.el.classList.contains("two-row") ? listHeight : 0;
 				const controlElementsAddedDTO: ControlElementsDTO = {
 					height: h,
 				};
