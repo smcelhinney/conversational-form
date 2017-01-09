@@ -215,8 +215,10 @@ namespace cf {
 
     public doSubmitForm() {
       if (this.submitCallback) {
+        console.log('Submit callback called');
         this.submitCallback();
       } else {
+        console.log(this.formEl, 'Form submit called');
         this.formEl.submit();
         this.remove();
       }
