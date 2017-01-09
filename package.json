@@ -1,0 +1,27 @@
+{
+  "name": "@appstructio/conversational-form",
+  "version": "1.0.0",
+  "description": "**Turning web forms into conversations.** Conversational Form is an open-source concept by <a href=\"https://www.space10.io\">SPACE10</a> to easily turn any form element on a web page into a conversational form interface. It features conversational replacement of all input elements, reusable variables from previous questions and complete customization and control over the styling.",
+  "main": "dist/conversational-form.min.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smcelhinney/conversational-form.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smcelhinney/conversational-form/issues"
+  },
+  "homepage": "https://github.com/smcelhinney/conversational-form#readme",
+  "dependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0"
+  }
+}

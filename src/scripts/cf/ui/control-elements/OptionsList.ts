@@ -3,103 +3,102 @@
 
 // namespace
 namespace cf {
-	// interface
+  // interface
 
-	export interface IOptionsListOptions{
-		context: HTMLElement;
-		referenceTag: ITag;
-	}
+  export interface IOptionsListOptions {
+    context: HTMLElement;
+    referenceTag: ITag;
+  }
 
-	// class
-	// builds x OptionsButton from the registered SelectTag
-	export class OptionsList {
+  // class
+  // builds x OptionsButton from the registered SelectTag
+  export class OptionsList {
 
-		public elements: Array<OptionButton>;
-		private context: HTMLElement;
-		private multiChoice: boolean;
-		private referenceTag: ITag;
-		private onOptionButtonClickCallback: () => void;
+    public elements: Array<OptionButton>;
+    private context: HTMLElement;
+    private multiChoice: boolean;
+    private referenceTag: ITag;
+    private onOptionButtonClickCallback: () => void;
 
-		public get type():string{
-			return "OptionsList";
-		}
+    public get type(): string {
+      return "OptionsList";
+    }
 
-		constructor(options: IOptionsListOptions){
-			this.context = options.context;
-			this.referenceTag = options.referenceTag;
+    constructor(options: IOptionsListOptions) {
+      this.context = options.context;
+      this.referenceTag = options.referenceTag;
 
-			// check for multi choice select tag
-			this.multiChoice = this.referenceTag.domElement.hasAttribute("multiple");
-			
-			this.onOptionButtonClickCallback = this.onOptionButtonClick.bind(this);
-			document.addEventListener(OptionButtonEvents.CLICK, this.onOptionButtonClickCallback, false);
+      // check for multi choice select tag
+      this.multiChoice = this.referenceTag.domElement.hasAttribute("multiple");
 
-			this.createElements();
-		}
+      this.onOptionButtonClickCallback = this.onOptionButtonClick.bind(this);
+      document.addEventListener(OptionButtonEvents.CLICK, this.onOptionButtonClickCallback, false);
 
-		public getValue(): Array<OptionButton> {
-			let arr: Array<OptionButton> = [];
-			for (let i = 0; i < this.elements.length; i++) {
-				let element: OptionButton = <OptionButton>this.elements[i];
-				if(!this.multiChoice && element.selected){
-					arr.push(element);
-					return arr;
-				}else if(this.multiChoice && element.selected){
-					arr.push(element);
-				}
-			}
-			return arr;
-		}
+      this.createElements();
+    }
 
-		private onOptionButtonClick(event: CustomEvent){
-			// if mutiple... then don remove selection on other buttons
-			const isMutiple: boolean = false;
-			if(!this.multiChoice){
-				// only one is selectable at the time.
+    public getValue(): Array<OptionButton> {
+      let arr: Array<OptionButton> = [];
+      for (let i = 0; i < this.elements.length; i++) {
+        let element: OptionButton = <OptionButton>this.elements[i];
+        if (!this.multiChoice && element.selected) {
+          arr.push(element);
+          return arr;
+        } else if (this.multiChoice && element.selected) {
+          arr.push(element);
+        }
+      }
+      return arr;
+    }
 
-				for (let i = 0; i < this.elements.length; i++) {
-					let element: OptionButton = <OptionButton>this.elements[i];
-					if(element != event.detail){
-						element.selected = false;
-					}else{
-						element.selected = true;
-					}
-				}
+    private onOptionButtonClick(event: CustomEvent) {
+      // if mutiple... then don remove selection on other buttons
+      const isMutiple: boolean = false;
+      if (!this.multiChoice) {
+        // only one is selectable at the time.
 
-				ConversationalForm.illustrateFlow(this, "dispatch", ControlElementEvents.SUBMIT_VALUE, this.referenceTag);
-				document.dispatchEvent(new CustomEvent(ControlElementEvents.SUBMIT_VALUE, {
-					detail: <OptionButton> event.detail
-				}));
-			}else{
-				(<OptionButton> event.detail).selected = !(<OptionButton> event.detail).selected;
-			}
-		}
+        for (let i = 0; i < this.elements.length; i++) {
+          let element: OptionButton = <OptionButton>this.elements[i];
+          if (element != event.detail) {
+            element.selected = false;
+          } else {
+            element.selected = true;
+          }
+        }
 
-		private createElements(){
-			this.elements = [];
-			var optionTags: Array<OptionTag> = (<SelectTag>this.referenceTag).optionTags;
-			for (let i = 0; i < optionTags.length; i++) {
-				let tag: OptionTag = optionTags[i];
+        ConversationalForm.illustrateFlow(this, "dispatch", ControlElementEvents.SUBMIT_VALUE, this.referenceTag);
+        document.dispatchEvent(new CustomEvent(ControlElementEvents.SUBMIT_VALUE, {
+          detail: <OptionButton>event.detail
+        }));
+      } else {
+        (<OptionButton>event.detail).selected = !(<OptionButton>event.detail).selected;
+      }
+    }
 
-				const btn: OptionButton = new OptionButton(<IOptionButtonOptions> {
-					referenceTag: tag,
-					isMultiChoice: (<SelectTag>this.referenceTag).multipleChoice,
-				});
+    private createElements() {
+      this.elements = [];
+      var optionTags: Array<OptionTag> = (<SelectTag>this.referenceTag).optionTags;
+      for (let i = 0; i < optionTags.length; i++) {
+        let tag: OptionTag = optionTags[i];
 
-				this.elements.push(btn);
+        const btn: OptionButton = new OptionButton(<IOptionButtonOptions>{
+          referenceTag: tag,
+          isMultiChoice: (<SelectTag>this.referenceTag).multipleChoice,
+        });
 
-				this.context.appendChild(btn.el);
-			}
-		}
+        this.elements.push(btn);
 
-		public dealloc(){
-			document.removeEventListener(OptionButtonEvents.CLICK, this.onOptionButtonClickCallback, false);
-			this.onOptionButtonClickCallback = null;
+        this.context.appendChild(btn.el);
+      }
+    }
 
-			while(this.elements.length > 0)
-				this.elements.pop().dealloc();
-			this.elements = null;
-		}
-	}
+    public dealloc() {
+      document.removeEventListener(OptionButtonEvents.CLICK, this.onOptionButtonClickCallback, false);
+      this.onOptionButtonClickCallback = null;
+
+      while (this.elements.length > 0)
+        this.elements.pop().dealloc();
+      this.elements = null;
+    }
+  }
 }
-

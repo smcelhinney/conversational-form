@@ -16,7 +16,7 @@ cf-input
 		input
 			opacity 1
 			transform translateY(0px) rotateX(0deg)
-		
+
 		cf-input-button.cf-input-button
 			transform scale(1, 1)
 
@@ -30,7 +30,7 @@ cf-input
 			outline none
 			-webkit-appearance none
 			box-shadow 0px 0px 30px rgba(0,0,0,0.2)
-		
+
 		border-radius 0
 		border none
 		-webkit-appearance none
@@ -92,7 +92,7 @@ cf-input
 
 			svg polygon
 				fill $color-input-error-text
-	
+
 	&[tag-type="file"]
 		cf-input-button.cf-input-button
 			&:after
@@ -100,7 +100,7 @@ cf-input
 				display block
 				width 100%
 				height 100%
-			
+
 				border 1px solid alpha(#b9bcbe, 50%)
 				border-radius 50%
 				border-left 0
@@ -112,7 +112,7 @@ cf-input
 			svg.cf-icon-attachment
 				transform rotateX(0deg)
 				opacity 1
-				
+
 
 			svg.cf-icon-progress
 				transform rotateX(-90deg)
@@ -163,7 +163,7 @@ cf-input-button.cf-input-button
 			fill #b9bcbe
 			will-change fill
 			transition fill $anim-time * 0.5 $anim-easeOut
-	
+
 	&:active
 		&:after
 			opacity 0
@@ -181,7 +181,7 @@ cf-input-button.cf-input-button
 			animation cf-arrow-up $anim-time $anim-easeInOut
 			polygon
 				fill $color-dark-blue
-		
+
 		svg.cf-icon-attachment
 			path
 				stroke $color-dark-blue
